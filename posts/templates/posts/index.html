@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>밸런스 게임</h3>
+
+
+{% if request.user.is_authenticated %}
+<div>
+    <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value='로그아웃'>
+        <a href="{% url 'posts:create' %}">밸런스 게임 만들기</a>
+    </form>
+</div>
+{% else %}
+<div>
+    <a href="{% url 'accounts:login' %}">로그인</a>
+    <a href="{% url 'accounts:signup' %}">회원가입</a>
+</div>
+{% endif %}
+{% for post in posts %}
+<hr>
+<div>
+    {{ post.title }}
+    <a href="{% url 'posts:detail' post.pk %}"> <br>주제 보기 </a>
+</div>
+<hr>
+{% endfor %}
+
+{% endblock content %}
+

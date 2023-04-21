@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{{ post.select1_content }} vs {{ post.select2_content }}</h3>
+    <hr>
+    <form method="POST" action="{% url 'posts:detail' post.pk %}">
+        {% csrf_token %}
+        <button type="submit" name="option" value="select1_content" {% if request.user in post.select1_users.all %}disabled{% endif %}>
+            {{ post.select1_content }}({{ post.select1_count }})
+        </button>
+        <button type="submit" name="option" value="select2_content" {% if request.user in post.select2_users.all %}disabled{% endif %}>
+            {{ post.select2_content }}({{ post.select2_count }})
+        </button>
+    </form>
+    <br>
+    <a href="{% url 'posts:index' %}">BACK</a>
+    <hr>
+{% endblock content %}
